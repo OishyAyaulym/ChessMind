@@ -7,7 +7,7 @@ export class SupabaseService {
   public supabase: SupabaseClient;
   public sessionActive = signal<boolean>(false);
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = createClient('https://livvwohgnlkfqapxfutq.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxpdnZ3b2hnbmxrZnFhcHhmdXRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxNjk5MDYsImV4cCI6MjA5Mjc0NTkwNn0.AxKUMYDvoDHa6jc54V_C3uiWtTIIvpQuo2E8GzOxU-A');
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.sessionActive.set(!!session);
     });
