@@ -1,0 +1,26 @@
+<div *ngIf="!supabase.sessionActive()">
+  <app-auth></app-auth>
+</div>
+
+<ng-container *ngIf="supabase.sessionActive()">
+  <app-board
+    *ngIf="currentView === 'play'"
+    (goLeaderboard)="currentView = 'leaderboard'"
+    (goProfile)="currentView = 'profile'"
+    (signedOut)="onSignedOut()">
+  </app-board>
+
+  <app-leaderboard
+    *ngIf="currentView === 'leaderboard'"
+    (back)="currentView = 'play'"
+    (goProfile)="currentView = 'profile'"
+    (signedOut)="onSignedOut()">
+  </app-leaderboard>
+
+  <app-profile
+    *ngIf="currentView === 'profile'"
+    (play)="currentView = 'play'"
+    (leaderboard)="currentView = 'leaderboard'"
+    (signedOut)="onSignedOut()">
+  </app-profile>
+</ng-container>

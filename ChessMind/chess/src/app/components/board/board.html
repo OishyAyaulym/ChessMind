@@ -1,0 +1,95 @@
+<div class="game-page">
+  <nav class="top-nav">
+    <div class="logo">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">ChessMind</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active">Play</a>
+      <a class="nav-link" (click)="goToLeaderboard()">Leaderboard</a>
+      <a class="nav-link" (click)="onProfile()">Profile</a>
+    </div>
+    <div class="user-actions">
+      <button (click)="toggleTheme()" class="theme-toggle" title="Toggle Theme">
+        {{ isDarkMode ? '🌙' : '☀️' }}
+      </button>
+      <button class="btn-signout" (click)="signOut()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="game-layout">
+    <div class="board-area">
+      <div class="board-header">
+        <select class="mode-select" [(ngModel)]="gameMode" (change)="onGameModeChange()">
+          <option value="pvp">♟ Person vs Person</option>
+          <option value="ai">🤖 Play vs AI</option>
+        </select>
+        <select class="difficulty-select" *ngIf="gameMode === 'ai'" [(ngModel)]="difficulty" (change)="changeDifficulty()">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <div class="turn-badge" *ngIf="gameMode === 'pvp'">
+          <span class="turn-dot" [class.white-dot]="currentTurn === 'white'" [class.black-dot]="currentTurn === 'black'"></span>
+          {{ currentTurn === 'white' ? "White's turn" : "Black's turn" }}
+        </div>
+      </div>
+      <div class="board-wrapper">
+        <div #boardContainer class="cg-board-wrapper"></div>
+      </div>
+    </div>
+    <div class="side-panel">
+      <div class="panel-card">
+        <h3 class="panel-title">Controls</h3>
+        <button class="btn-new-game" (click)="newGame()" [class.active]="!gameStarted">New Game</button>
+        <div class="btn-row">
+          <button class="btn-undo" (click)="undoMove()" [disabled]="moveHistory.length === 0">Undo Move</button>
+          <button class="btn-resign" (click)="resign()" [disabled]="!gameStarted || gameOver">Resign</button>
+        </div>
+        <div *ngIf="!gameStarted" class="hint-container">
+          <span class="hint-icon">💡</span>
+          <p class="hint-text">Click <strong>"New Game"</strong> to start your match!</p>
+        </div>
+      </div>
+      <div class="panel-card history-card">
+        <h3 class="panel-title">Move History</h3>
+        <div class="move-list" #moveListEl>
+          <p class="no-moves" *ngIf="moveHistory.length === 0">No moves yet. Make your first move!</p>
+          <div class="move-pairs">
+            <div class="move-pair" *ngFor="let pair of movePairs; let i = index">
+              <span class="move-number">{{ i + 1 }}.</span>
+              <span class="move-san white-move">{{ pair[0] }}</span>
+              <span class="move-san black-move" *ngIf="pair[1]">{{ pair[1] }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="status-bar" *ngIf="statusMessage">
+        {{ statusMessage }}
+      </div>
+      <div class="panel-card profile-card" *ngIf="profile">
+        <div class="profile-row">
+          <div class="avatar">{{ profile.username?.charAt(0)?.toUpperCase() }}</div>
+          <div class="profile-info">
+            <div class="profile-name">{{ profile.username }}</div>
+            <div class="profile-country">{{ profile.country }}</div>
+          </div>
+          <div class="rating-badge">{{ profile.rating }}</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-num wins">{{ profile.wins }}</span>
+            <span class="stat-label">Wins</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num losses">{{ profile.losses }}</span>
+            <span class="stat-label">Losses</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num draws">{{ profile.draws }}</span>
+            <span class="stat-label">Draws</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

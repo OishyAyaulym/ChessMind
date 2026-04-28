@@ -1,0 +1,120 @@
+<div class="auth-wrapper">
+  <!--LANDING PAGE-->
+  <div class="landing-container" *ngIf="!showAuthForm && !showEmailConfirm">
+    <nav class="nav">
+      <div class="logo">
+        <span class="logo-icon">C</span>
+        <span class="logo-text">ChessMind</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link" (click)="openForm(true)">Play</a>
+        <a class="nav-link" (click)="openForm(true)">Leaderboard</a>
+      </div>
+      <div class="auth-right-section">
+        <button (click)="toggleTheme()" class="theme-toggle">
+          {{ isDarkMode ? '🌙' : '☀️' }}
+        </button>
+        <button class="btn-signin" (click)="openForm(true)">Sign In</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1>Master the Board.<br><span class="hero-accent">Sharpen your mind.</span></h1>
+      <p class="hero-sub">
+        Experience chess in a distraction-free, premium environment.<br>
+        Play against a sophisticated AI, track your progress, and climb the ranks.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-play" (click)="openForm(true)">Play vs AI</button>
+        <button class="btn-create" (click)="openForm(false)">Create Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!--EMAIL CONFIRMATION SCREEN-->
+  <div class="auth-container" *ngIf="showEmailConfirm">
+    <div class="logo" (click)="resetToLanding()" style="cursor: pointer; justify-content: center;">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">ChessMind</span>
+    </div>
+    <div class="confirm-icon">✉️</div>
+    <h1>Check your email</h1>
+    <p class="subtitle">
+      We sent a confirmation link to<br>
+      <strong style="color: var(--accent-color);">{{ email }}</strong>
+    </p>
+    <p class="confirm-hint">
+      Click the link in the email to activate your account, then come back and sign in.
+    </p>
+    <button class="btn-main" (click)="switchToLogin()">Go to Sign In</button>
+    <div class="footer-link">
+      <span (click)="resetToLanding()">← Back to home</span>
+    </div>
+  </div>
+
+  <!--AUTH FORM-->
+  <div class="auth-container" *ngIf="showAuthForm && !showEmailConfirm">
+    <div class="logo" (click)="resetToLanding()" style="cursor: pointer; justify-content: center;">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">ChessMind</span>
+    </div>
+
+    <h1>{{ isLogin ? 'Welcome Back' : 'Master the Board' }}</h1>
+    <p class="subtitle">Experience chess in a premium environment</p>
+
+    <form (ngSubmit)="handleAuth($event)">
+      <div class="input-group" *ngIf="!isLogin">
+        <label>Username</label>
+        <input type="text" [(ngModel)]="username" name="username" placeholder="Grandmaster_1" required>
+      </div>
+
+      <div class="input-group" *ngIf="!isLogin">
+        <label>Full Name</label>
+        <input type="text" [(ngModel)]="fullName" name="fullName" placeholder="Ayaulym Oishy">
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="chess@example.com" required>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required>
+      </div>
+
+      <div class="input-group" *ngIf="!isLogin">
+        <label>Country</label>
+        <select [(ngModel)]="country" name="country">
+          <option value="Kazakhstan">🇰🇿 Kazakhstan</option>
+          <option value="Russia">🇷🇺 Russia</option>
+          <option value="USA">🇺🇸 USA</option>
+          <option value="Germany">🇩🇪 Germany</option>
+          <option value="France">🇫🇷 France</option>
+          <option value="China">🇨🇳 China</option>
+          <option value="India">🇮🇳 India</option>
+          <option value="Brazil">🇧🇷 Brazil</option>
+          <option value="UK">🇬🇧 UK</option>
+          <option value="Ukraine">🇺🇦 Ukraine</option>
+          <option value="Other">🌍 Other</option>
+        </select>
+      </div>
+      <div class="status-message" *ngIf="message" [ngClass]="messageClass">
+        {{ message }}
+      </div>
+
+      <button type="submit" class="btn-main" [disabled]="loading">
+        {{ loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account') }}
+      </button>
+    </form>
+
+    <div class="footer-link">
+      <span (click)="isLogin = !isLogin; message = ''">
+        {{ isLogin ? "Don't have an account? Register" : "Already a member? Login" }}
+      </span>
+    </div>
+    <div class="footer-link">
+      <span (click)="resetToLanding()">← Back to Home</span>
+    </div>
+  </div>
+</div>

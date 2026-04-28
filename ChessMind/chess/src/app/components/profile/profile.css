@@ -1,0 +1,217 @@
+.profile-page {
+  background: var(--bg-color);
+  min-height: 100vh;
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+/*NAV*/
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.1rem; }
+.logo-icon { background: var(--accent-color); color: black; padding: 4px 10px; border-radius: 6px; font-weight: 900; }
+.logo-text { font-size: 1.05rem; font-weight: 700; }
+
+.nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 28px; }
+.nav-link { color: var(--text-muted); font-size: 0.95rem; cursor: pointer; transition: color 0.2s; padding-bottom: 2px; text-decoration: none; }
+.nav-link:hover, .nav-link.active { color: var(--text-main); }
+.nav-link.active { border-bottom: 2px solid var(--accent-color); }
+
+.user-actions { display: flex; align-items: center; gap: 16px; }
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { background: var(--card-bg); border-color: var(--accent-color); }
+
+.btn-signout {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid #333;
+  padding: 7px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-signout:hover { color: #e74c3c; border-color: #e74c3c; }
+
+/*CONTENT*/
+.profile-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/*HERO CARD*/
+.profile-hero {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.profile-avatar-big {
+  width: 72px;
+  height: 72px;
+  background: var(--accent-color);
+  color: black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.profile-hero-info { flex: 1; }
+.profile-hero-info h1 { font-size: 1.6rem; font-weight: 800; margin: 0 0 10px; }
+
+.profile-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.meta-item {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  background: var(--bg-color);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.rank-badge {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  font-weight: 600;
+}
+
+.unranked { color: var(--text-muted); }
+
+.rating-big { text-align: center; flex-shrink: 0; }
+.rating-num {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--accent-color);
+  line-height: 1;
+}
+.rating-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+/*STATS GRID*/
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.stat-value { font-size: 1.8rem; font-weight: 800; margin-bottom: 4px; }
+.stat-value.wins { color: #27ae60; }
+.stat-value.losses { color: #e74c3c; }
+.stat-value.draws { color: var(--accent-color); }
+.stat-value.accent { color: var(--accent-color); }
+.stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+/*HISTORY*/
+.section-title { font-size: 1.2rem; font-weight: 700; margin: 0 0 16px; }
+
+.history-loading, .no-games {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-style: italic;
+}
+
+.games-list {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.game-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+  transition: background 0.15s;
+}
+.game-row:last-child { border-bottom: none; }
+.game-row:hover { background: var(--bg-color); }
+
+.game-result-badge {
+  width: 52px;
+  text-align: center;
+  padding: 4px 0;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.result-win { background: rgba(39,174,96,0.15); color: #27ae60; }
+.result-loss { background: rgba(231,76,60,0.15); color: #e74c3c; }
+.result-draw { background: rgba(243,156,18,0.15); color: var(--accent-color); }
+
+.game-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.game-type { font-size: 0.88rem; font-weight: 500; color: var(--text-main); }
+.game-date { font-size: 0.78rem; color: var(--text-muted); }
+
+.game-rating-change { font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
+.change-positive { color: #27ae60; }
+.change-negative { color: #e74c3c; }
+.change-neutral { color: var(--accent-color); }
+
+.page-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .profile-hero { flex-direction: column; text-align: center; }
+  .profile-meta { justify-content: center; }
+}
+
+@media (max-width: 500px) {
+  .top-nav { padding: 10px 14px; }
+  .logo-text { display: none; }
+  .nav-links { position: static; transform: none; gap: 14px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .profile-content { padding: 20px 12px; }
+}

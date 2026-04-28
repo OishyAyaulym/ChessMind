@@ -1,0 +1,74 @@
+<div class="leaderboard-page">
+  <nav class="top-nav">
+    <div class="logo">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">ChessMind</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" (click)="goBack()">Play</a>
+      <a class="nav-link active">Leaderboard</a>
+      <a class="nav-link" (click)="onProfile()">Profile</a>
+    </div>
+    <div class="user-actions">
+      <button (click)="toggleTheme()" class="theme-toggle">
+        {{ isDarkMode ? '🌙' : '☀️' }}
+      </button>
+      <button class="btn-signout" (click)="signOut()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="lb-content">
+    <div class="lb-header">
+      <h1>Grandmasters</h1>
+      <p class="lb-subtitle">Top 50 players sorted by rating and total victories.</p>
+    </div>
+    <div class="lb-card">
+      <div class="lb-card-header">
+        <h2>Global Leaderboard</h2>
+        <p class="lb-card-sub">Top 50 players worldwide</p>
+      </div>
+      <div class="loading" *ngIf="loading">Loading...</div>
+      <div class="error-row" *ngIf="!loading && errorMsg">
+        ⚠️ {{ errorMsg }}
+      </div>
+      <table class="lb-table" *ngIf="!loading && !errorMsg">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Country</th>
+            <th>Rating</th>
+            <th>W</th>
+            <th>L</th>
+            <th>D</th>
+            <th>Win %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let player of players; let i = index"
+            [class.current-user]="player.id === currentUserId">
+            <td class="rank-cell">
+              <span *ngIf="i === 0">🥇</span>
+              <span *ngIf="i === 1">🥈</span>
+              <span *ngIf="i === 2">🥉</span>
+              <span class="rank-num" *ngIf="i > 2">#{{ i + 1 }}</span>
+            </td>
+            <td class="player-cell">
+              <div class="player-avatar">{{ player.username?.charAt(0)?.toUpperCase() }}</div>
+              <span class="player-name">{{ player.username }}</span>
+            </td>
+            <td class="country-cell">{{ player.country || '—' }}</td>
+            <td class="rating-cell">{{ player.rating }}</td>
+            <td class="wins-cell">{{ player.wins }}</td>
+            <td class="losses-cell">{{ player.losses }}</td>
+            <td class="draws-cell">{{ player.draws }}</td>
+            <td><span class="winrate-badge">{{ getWinRate(player) }}%</span></td>
+          </tr>
+          <tr *ngIf="players.length === 0 && !loading">
+            <td colspan="8" class="empty-row">No players yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

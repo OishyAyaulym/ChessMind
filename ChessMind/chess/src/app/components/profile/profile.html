@@ -1,0 +1,86 @@
+<div class="profile-page">
+  <nav class="top-nav">
+    <div class="logo">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">ChessMind</span>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" (click)="goPlay()">Play</a>
+      <a class="nav-link" (click)="goLeaderboard()">Leaderboard</a>
+      <a class="nav-link active">Profile</a>
+    </div>
+    <div class="user-actions">
+      <button (click)="toggleTheme()" class="theme-toggle">
+        {{ isDarkMode ? '🌙' : '☀️' }}
+      </button>
+      <button class="btn-signout" (click)="signOut()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="profile-content" *ngIf="profile">
+    <div class="profile-hero">
+      <div class="profile-avatar-big">{{ profile.username?.charAt(0)?.toUpperCase() }}</div>
+      <div class="profile-hero-info">
+        <h1>{{ profile.username }}</h1>
+        <div class="profile-meta">
+          <span class="meta-item">🌍 {{ profile.country || 'Unknown' }}</span>
+          <span class="meta-item rank-badge" *ngIf="rank !== null">
+            🏆 Rank #{{ rank }} in Top 50
+          </span>
+          <span class="meta-item unranked" *ngIf="rank === null">
+            Not in Top 50 yet
+          </span>
+        </div>
+      </div>
+      <div class="rating-big">
+        <div class="rating-num">{{ profile.rating }}</div>
+        <div class="rating-label">Rating</div>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value wins">{{ profile.wins }}</div>
+        <div class="stat-label">Wins</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value losses">{{ profile.losses }}</div>
+        <div class="stat-label">Losses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value draws">{{ profile.draws }}</div>
+        <div class="stat-label">Draws</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value accent">{{ getWinRate() }}%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ getTotalGames() }}</div>
+        <div class="stat-label">Total Games</div>
+      </div>
+    </div>
+    <div class="history-section">
+      <h2 class="section-title">Game History</h2>
+      <div class="history-loading" *ngIf="loadingGames">Loading games...</div>
+      <div class="no-games" *ngIf="!loadingGames && games.length === 0">
+        No games played yet. Go play! 🎯
+      </div>
+      <div class="games-list" *ngIf="!loadingGames && games.length > 0">
+        <div class="game-row" *ngFor="let game of games">
+          <div class="game-result-badge" [ngClass]="getResultClass(game)">
+            {{ getResultLabel(game) }}
+          </div>
+          <div class="game-info">
+            <span class="game-type">{{ game.game_type === 'ai' ? '🤖 vs AI' : '👤 vs Player' }}</span>
+            <span class="game-date">{{ formatDate(game.created_at) }}</span>
+          </div>
+          <div class="game-rating-change" [ngClass]="getRatingChangeClass(game)">
+            {{ getRatingChange(game) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-loading" *ngIf="!profile">
+    Loading profile...
+  </div>
+</div>
