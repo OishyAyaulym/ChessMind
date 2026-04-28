@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "chess.js": "^1.4.0",
+    "ngx-chess-board": "^3.0.0"
+  }
+}
